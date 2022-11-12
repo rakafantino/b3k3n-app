@@ -12,7 +12,8 @@ function Card({ book, handleFavorites }) {
           </svg>
         </button>
       </div>
-      <div className="pt-3 text-sm">{book.title}</div>
+      <div className="pt-3 text-sm font-semibold">{book.title}</div>
+      <div className="pt-3 text-sm">by {book.authors.map((author) => `${author} `)}</div>
     </div>
   );
 }

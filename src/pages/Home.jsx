@@ -21,7 +21,7 @@ export default function Home() {
       .then((res) => {
         setCategories(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
   const getBookList = (id) => {
@@ -67,8 +67,6 @@ export default function Home() {
   function searchList() {
     return <SearchList filteredBook={filteredBook} />;
   }
-
-  
 
   useEffect(() => {
     getCategory();
