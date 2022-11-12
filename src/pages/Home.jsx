@@ -15,7 +15,7 @@ export default function Home() {
     axios
       .get("/fee-assessment-categories", {
         headers: {
-          "Access-Control-Allow-Origin": "https://b3k3n-app.vercel.app/",
+          "Access-Control-Allow-Origin": "*",
         },
       })
       .then((res) => {
