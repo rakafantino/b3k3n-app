@@ -9,6 +9,7 @@ export default function Home() {
   let [searchField, setSearchField] = useState("");
   let [categoryId, setCategoryId] = useState("");
   let [page, setPage] = useState(2);
+  let [endPage, setEndPage] = useState(false);
 
   const getCategory = () => {
     axios
@@ -20,7 +21,7 @@ export default function Home() {
       .then((res) => {
         setCategories(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.warn(err));
   };
 
   const getBookList = (id) => {
@@ -29,25 +30,28 @@ export default function Home() {
       .then((res) => {
         setBookList(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setBookList([]));
   };
 
   const nextPage = (id, page) => {
     axios
       .get(`/fee-assessment-books?categoryId=${id}&page=${page}&size=10`)
       .then((res) => {
-        console.log(res);
         setBookList(res.data);
+        setEndPage(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setBookList([]);
+        setEndPage(true);
+      });
   };
 
   const previousPage = async (id, page) => {
     axios
       .get(`/fee-assessment-books?categoryId=${id}&page=${page - 2}&size=10`)
       .then((res) => {
-        console.log(res);
         setBookList(res.data);
+        setEndPage(false);
       })
       .catch((err) => console.log(err));
   };
@@ -68,8 +72,6 @@ export default function Home() {
     getCategory();
   }, []);
 
-  console.log(categoryId);
-
   return (
     <>
       <Layout>
@@ -78,7 +80,7 @@ export default function Home() {
         </form>
         <div className="flex items-center flex-col gap-2">
           <h2>Categories</h2>
-          <select name="book-categories" className="py-2 text-sm shadow-md " onClick={(e) => (getBookList(e.target.value), setCategoryId(e.target.value))}>
+          <select name="book-categories" className="py-2 text-sm shadow-md " onClick={(e) => (getBookList(e.target.value), setCategoryId(e.target.value), setPage(2))}>
             <option value="">Select Categories</option>
             {categories && (
               <>
@@ -93,14 +95,22 @@ export default function Home() {
             )}
           </select>
         </div>
-        {searchList()}
+        <div className="min-h-screen">
+          {endPage ? (
+            <div className="flex justify-items-center mt-96">
+              <div className="font-bold text-xl mx-auto">END OF THE PAGE☹️</div>
+            </div>
+          ) : (
+            <>{searchList()}</>
+          )}
+        </div>
 
         <div className="flex gap-3 justify-center items-center my-4">
-          <button className="py-2 px-4 bg-indigo-600 rounded-sm text-white" onClick={() => (previousPage(categoryId, page), setPage(page - 1))}>
+          <button className="py-2 px-4 bg-indigo-600 rounded-sm text-white " onClick={() => (previousPage(categoryId, page), setPage(page - 1))} disabled={page === 2}>
             {"<<"}
           </button>
           {page - 1}
-          <button className="py-2 px-4 bg-indigo-600 rounded-sm text-white" onClick={() => (nextPage(categoryId, page), setPage(page + 1))}>
+          <button className="py-2 px-4 bg-indigo-600 rounded-sm text-white" onClick={() => (nextPage(categoryId, page), setPage(page + 1))} disabled={endPage === true}>
             {">>"}
           </button>
         </div>
