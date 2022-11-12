@@ -15,18 +15,19 @@ export default function Favorite() {
     <>
       <Layout>
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 justify-items-center text-center gap-4 mt-4 ">
-          {favoriteBook ? (
+          {favoriteBook && (
             <>
               {favoriteBook.map((book) => {
                 return <Card key={book.id} book={book} />;
               })}
             </>
-          ) : (
-            <div className="flex justify-items-center mx-auto">
-              <div className="font-bold text-xl mx-auto">NO FAVORITE BOOK YET</div>
-            </div>
           )}
         </div>
+        {!favoriteBook && (
+          <div className="flex">
+            <div className="font-bold text-xl mx-auto">NO FAVORITE BOOK YET</div>
+          </div>
+        )}
       </Layout>
     </>
   );
