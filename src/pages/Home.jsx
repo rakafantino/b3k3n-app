@@ -13,7 +13,7 @@ export default function Home() {
 
   const getCategory = () => {
     axios
-      .get("/fee-assessment-categories", {
+      .get("https://asia-southeast2-sejutacita-app.cloudfunctions.net/fee-assessment-categories", {
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -26,7 +26,7 @@ export default function Home() {
 
   const getBookList = (id) => {
     axios
-      .get(`/fee-assessment-books?categoryId=${id}&page=1&size=10`)
+      .get(`https://asia-southeast2-sejutacita-app.cloudfunctions.net/fee-assessment-books?categoryId=${id}&page=1&size=10`)
       .then((res) => {
         setBookList(res.data);
       })
@@ -35,7 +35,7 @@ export default function Home() {
 
   const nextPage = (id, page) => {
     axios
-      .get(`/fee-assessment-books?categoryId=${id}&page=${page}&size=10`)
+      .get(`https://asia-southeast2-sejutacita-app.cloudfunctions.net/fee-assessment-books?categoryId=${id}&page=${page}&size=10`)
       .then((res) => {
         setBookList(res.data);
         setEndPage(false);
