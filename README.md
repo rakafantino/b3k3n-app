@@ -3,6 +3,7 @@
 </h2>
 
 B3k3n app is an application that I built to fulfill the technical test of Deall Jobs.
+note I'm still having some trouble with production version.
 
 ## How to start the app
 
