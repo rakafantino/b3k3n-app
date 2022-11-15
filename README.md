@@ -4,7 +4,7 @@
 
 B3k3n app is an application that I built to fulfill the technical test of Deall Jobs.
 
-**Note** I'm still having some trouble with the production.
+**Note** I'm still having some trouble with the production more specifically on CORS.
 
 
 ## How to start the app
