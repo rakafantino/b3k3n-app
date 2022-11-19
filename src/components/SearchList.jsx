@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Card from "./Card";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function SearchList({ filteredBook }) {
   let data = JSON.parse(localStorage.getItem("favoriteBook"));
@@ -10,6 +12,12 @@ function SearchList({ filteredBook }) {
     favoriteBook.push(book);
     // setFavoriteBook([...favoriteBook, book]);
     localStorage.setItem("favoriteBook", JSON.stringify(favoriteBook));
+    const MySwal = withReactContent(Swal);
+    MySwal.fire({
+      title: <strong>Successfully</strong>,
+      html: <i>Adding book into favorite</i>,
+      icon: "success",
+    });
   };
 
   const filtered = filteredBook.map((book) => <Card key={book.id} book={book} handleFavorites={handleFavorites} />);
